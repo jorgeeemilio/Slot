@@ -1,9 +1,11 @@
 package es.studium.Slot;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-public class Controlador implements WindowListener
+public class Controlador implements WindowListener, MouseListener
 {
 	Modelo modelo;
 	MenuPrincipal menuPrincipal;
@@ -14,6 +16,7 @@ public class Controlador implements WindowListener
 		this.menuPrincipal = mp;
 		
 		this.menuPrincipal.addWindowListener(this);
+		this.menuPrincipal.addMouseListener(this);
 	}
 	
 	@Override
@@ -33,4 +36,33 @@ public class Controlador implements WindowListener
 	public void windowActivated(WindowEvent e){}
 	@Override
 	public void windowDeactivated(WindowEvent e){}
+
+	@Override
+	public void mouseClicked(MouseEvent me)
+	{
+		int x = me.getX();
+		int y = me.getY();
+		
+		if(x>10&&x<50&&y>50&&y<90)
+		{
+			System.out.println("Nueva Partida");
+		}
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e)
+	{}
+
+	@Override
+	public void mouseReleased(MouseEvent e)
+	{}
+
+	@Override
+	public void mouseEntered(MouseEvent e)
+	{}
+
+	@Override
+	public void mouseExited(MouseEvent e)
+	{}
 }
