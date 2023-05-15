@@ -10,6 +10,8 @@ public class Controlador implements WindowListener, MouseListener
 	Modelo modelo;
 	MenuPrincipal menuPrincipal;
 	
+	Tablero tablero;
+	
 	Controlador(Modelo m, MenuPrincipal mp)
 	{
 		this.modelo = m;
@@ -45,9 +47,9 @@ public class Controlador implements WindowListener, MouseListener
 		
 		if(x>10&&x<50&&y>50&&y<90)
 		{
-			System.out.println("Nueva Partida");
+			tablero = new Tablero();
+			this.tablero.addWindowListener(this);
 		}
-		
 	}
 
 	@Override

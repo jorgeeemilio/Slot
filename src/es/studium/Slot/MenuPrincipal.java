@@ -18,7 +18,6 @@ public class MenuPrincipal extends Frame
 	{
 		Color color = new Color(181,230,29);
 		g.setColor(color);
-		// Se dibuja un rectángulo de 25 pixeles de ancho x alto a partir de la posición 50,50
 		g.drawRect(10, 50, 40, 40);
 	}
 }
