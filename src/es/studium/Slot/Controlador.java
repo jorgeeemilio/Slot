@@ -12,6 +12,10 @@ public class Controlador implements WindowListener, MouseListener
 
 	Tablero tablero;
 	Ranking ranking;
+	
+	int dinerito;
+	
+	int numero1, numero2, numero3;
 
 	Controlador(Modelo m, MenuPrincipal mp)
 	{
@@ -20,6 +24,8 @@ public class Controlador implements WindowListener, MouseListener
 
 		this.menuPrincipal.addWindowListener(this);
 		this.menuPrincipal.addMouseListener(this);
+		
+		dinerito = 5;
 	}
 
 	@Override
@@ -57,27 +63,65 @@ public class Controlador implements WindowListener, MouseListener
 		int x = me.getX();
 		int y = me.getY();
 
-		if(x>20&&x<60&&y>50&&y<90)
+		if(menuPrincipal.isActive())
 		{
-			// Primera opción: Tablero
-			tablero = new Tablero();
-			this.tablero.addWindowListener(this);
+			if(x>20&&x<60&&y>50&&y<90)
+			{
+				// Primera opciÃ³n: Tablero
+				tablero = new Tablero();
+				this.tablero.addWindowListener(this);
+				this.tablero.addMouseListener(this);
+			}
+			else if(x>80&&x<120&&y>100&&y<140)
+			{
+				// Segunda opciÃ³n: Ayuda
+				System.out.println("Ayuda");
+			}
+			else if(x>140&&x<180&&y>160&&y<200)
+			{
+				// Tercer opciÃ³n: Ranking
+				ranking = new Ranking();
+				this.ranking.addWindowListener(this);
+			}
+			else if(x>200&&x<240&&y>210&&y<250)
+			{
+				// Cuarta opciÃ³n: Salir
+				System.exit(0);
+			}
 		}
-		else if(x>80&&x<120&&y>100&&y<140)
+		else if(tablero.isActive())
 		{
-			// Segunda opción: Ayuda
-			System.out.println("Ayuda");
-		}
-		else if(x>140&&x<180&&y>160&&y<200)
-		{
-			// Tercer opción: Ranking
-			ranking = new Ranking();
-			this.ranking.addWindowListener(this);
-		}
-		else if(x>200&&x<240&&y>210&&y<250)
-		{
-			// Cuarta opción: Salir
-			System.exit(0);
+			// BotÃ³n JUGAR de Tablero
+			if(x>20&&x<250&&y>210&&y<250)
+			{
+				dinerito--;
+				numero1 = modelo.aleatorio();
+				numero2 = modelo.aleatorio();
+				numero3 = modelo.aleatorio();
+				System.out.println(numero1+" "+numero2+" "+numero3);
+				// Comprobar SI premio
+				if(numero1==numero2&&numero2==numero3&&numero1==14)
+				{
+					dinerito = dinerito + 5;
+				}
+				else if(numero1==numero2&&numero2==numero3&&numero1>=10&&numero1<=13)
+				{
+					dinerito = dinerito + 2;
+				}
+				else if(numero1==numero2&&numero2==numero3)
+				{
+					dinerito ++;
+				}
+				if(dinerito == 0)
+				{
+					System.out.println("Se acabÃ³");
+					this.tablero.removeMouseListener(this);
+				}
+				else
+				{
+					System.out.println("Tienes "+ dinerito + "â‚¬");
+				}
+			}
 		}
 	}
 
