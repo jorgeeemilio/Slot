@@ -45,10 +45,26 @@ public class Controlador implements WindowListener, MouseListener
 		int x = me.getX();
 		int y = me.getY();
 		
-		if(x>10&&x<50&&y>50&&y<90)
+		if(x>20&&x<60&&y>50&&y<90)
 		{
+			// Primera opción: Tablero
 			tablero = new Tablero();
 			this.tablero.addWindowListener(this);
+		}
+		else if(x>80&&x<120&&y>100&&y<140)
+		{
+			// Segunda opción: Ayuda
+			System.out.println("Ayuda");
+		}
+		else if(x>140&&x<180&&y>160&&y<200)
+		{
+			// Tercer opción: Ranking
+			System.out.println("Ranking");
+		}
+		else if(x>200&&x<240&&y>210&&y<250)
+		{
+			// Cuarta opción: Salir
+			System.exit(0);
 		}
 	}
 
