@@ -27,11 +27,11 @@ public class Controlador implements WindowListener, MouseListener
 	@Override
 	public void windowClosing(WindowEvent e)
 	{
-		if(tablero.isActive())
+		if(tablero!=null&&tablero.isActive())
 		{
 			tablero.setVisible(false);
 		}
-		else if(ranking.isActive())
+		else if(ranking!=null&&ranking.isActive())
 		{
 			ranking.setVisible(false);
 		}
