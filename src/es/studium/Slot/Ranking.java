@@ -2,16 +2,16 @@ package es.studium.Slot;
 
 import java.awt.Frame;
 
-public class Tablero extends Frame
+public class Ranking extends Frame
 {
 	private static final long serialVersionUID = 1L;
 	
-	Tablero()
+	Ranking()
 	{
-		setTitle("Jugando...");
+		setTitle("Top Ten");
+		setSize(280,280);
 		setResizable(false);
 		setLocationRelativeTo(null);
-		setSize(280,280);
 		setVisible(true);
 	}
 }

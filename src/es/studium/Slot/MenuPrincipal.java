@@ -11,6 +11,8 @@ public class MenuPrincipal extends Frame
 	MenuPrincipal()
 	{
 		setSize(280,280);
+		setResizable(false);
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 	

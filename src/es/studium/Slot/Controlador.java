@@ -9,24 +9,36 @@ public class Controlador implements WindowListener, MouseListener
 {
 	Modelo modelo;
 	MenuPrincipal menuPrincipal;
-	
+
 	Tablero tablero;
-	
+	Ranking ranking;
+
 	Controlador(Modelo m, MenuPrincipal mp)
 	{
 		this.modelo = m;
 		this.menuPrincipal = mp;
-		
+
 		this.menuPrincipal.addWindowListener(this);
 		this.menuPrincipal.addMouseListener(this);
 	}
-	
+
 	@Override
 	public void windowOpened(WindowEvent e){}
 	@Override
 	public void windowClosing(WindowEvent e)
 	{
-		System.exit(0);	
+		if(tablero.isActive())
+		{
+			tablero.setVisible(false);
+		}
+		else if(ranking.isActive())
+		{
+			ranking.setVisible(false);
+		}
+		else
+		{
+			System.exit(0);
+		}
 	}
 	@Override
 	public void windowClosed(WindowEvent e){}
@@ -44,7 +56,7 @@ public class Controlador implements WindowListener, MouseListener
 	{
 		int x = me.getX();
 		int y = me.getY();
-		
+
 		if(x>20&&x<60&&y>50&&y<90)
 		{
 			// Primera opción: Tablero
@@ -59,7 +71,8 @@ public class Controlador implements WindowListener, MouseListener
 		else if(x>140&&x<180&&y>160&&y<200)
 		{
 			// Tercer opción: Ranking
-			System.out.println("Ranking");
+			ranking = new Ranking();
+			this.ranking.addWindowListener(this);
 		}
 		else if(x>200&&x<240&&y>210&&y<250)
 		{
@@ -69,18 +82,11 @@ public class Controlador implements WindowListener, MouseListener
 	}
 
 	@Override
-	public void mousePressed(MouseEvent e)
-	{}
-
+	public void mousePressed(MouseEvent e){}
 	@Override
-	public void mouseReleased(MouseEvent e)
-	{}
-
+	public void mouseReleased(MouseEvent e){}
 	@Override
-	public void mouseEntered(MouseEvent e)
-	{}
-
+	public void mouseEntered(MouseEvent e){}
 	@Override
-	public void mouseExited(MouseEvent e)
-	{}
+	public void mouseExited(MouseEvent e){}
 }
