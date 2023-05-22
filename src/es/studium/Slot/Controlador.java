@@ -14,6 +14,7 @@ public class Controlador implements WindowListener, MouseListener
 	Ranking ranking;
 	
 	int dinerito;
+	int tiradas;
 	
 	int numero1, numero2, numero3;
 
@@ -26,6 +27,8 @@ public class Controlador implements WindowListener, MouseListener
 		this.menuPrincipal.addMouseListener(this);
 		
 		dinerito = 5;
+		
+		tiradas = 0;
 	}
 
 	@Override
@@ -69,6 +72,8 @@ public class Controlador implements WindowListener, MouseListener
 			{
 				// Primera opción: Tablero
 				tablero = new Tablero();
+				dinerito = 5;
+				tiradas = 0;
 				this.tablero.addWindowListener(this);
 				this.tablero.addMouseListener(this);
 			}
@@ -95,9 +100,13 @@ public class Controlador implements WindowListener, MouseListener
 			if(x>20&&x<250&&y>210&&y<250)
 			{
 				dinerito--;
+				tiradas++;
 				numero1 = modelo.aleatorio();
 				numero2 = modelo.aleatorio();
 				numero3 = modelo.aleatorio();
+				tablero.establecerPrimera(numero1);
+				tablero.establecerSegunda(numero2);
+				tablero.establecerTercera(numero3);
 				System.out.println(numero1+" "+numero2+" "+numero3);
 				// Comprobar SI premio
 				if(numero1==numero2&&numero2==numero3&&numero1==14)
@@ -112,15 +121,39 @@ public class Controlador implements WindowListener, MouseListener
 				{
 					dinerito ++;
 				}
+				else if(numero1==numero2)
+				{
+					dinerito++;
+				}
+				else if(numero2==numero3)
+				{
+					dinerito++;
+				}
+				else if(numero1==numero3)
+				{
+					dinerito++;
+				}
 				if(dinerito == 0)
 				{
 					System.out.println("Se acabó");
+					System.out.println("Has realizado " + tiradas + " tiradas");
 					this.tablero.removeMouseListener(this);
 				}
 				else
 				{
 					System.out.println("Tienes "+ dinerito + "€");
 				}
+			}
+			// Botón Avance Primero
+			else if(x>20&&x<90&&y>140&&y<160)
+			{
+				numero1++;
+				dinerito--;
+				if(numero1>14)
+				{
+					numero1 = 1;
+				}
+				tablero.establecerPrimera(numero1);
 			}
 		}
 	}

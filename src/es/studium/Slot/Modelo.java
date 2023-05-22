@@ -16,4 +16,9 @@ public class Modelo
 		int numero = aleatorio.nextInt(14)+1;
 		return(numero);
 	}
+	
+	// Conexión
+	// Desconexión
+	// Consultar para el Ranking
+	// Insertar en BD
 }
