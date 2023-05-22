@@ -1,11 +1,14 @@
 package es.studium.Slot;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.sql.Connection;
 
-public class Controlador implements WindowListener, MouseListener
+public class Controlador implements ActionListener, WindowListener, MouseListener
 {
 	Modelo modelo;
 	MenuPrincipal menuPrincipal;
@@ -15,6 +18,8 @@ public class Controlador implements WindowListener, MouseListener
 	
 	int dinerito;
 	int tiradas;
+	
+	boolean avance;
 	
 	int numero1, numero2, numero3;
 
@@ -29,6 +34,8 @@ public class Controlador implements WindowListener, MouseListener
 		dinerito = 5;
 		
 		tiradas = 0;
+		
+		avance = false;
 	}
 
 	@Override
@@ -43,6 +50,11 @@ public class Controlador implements WindowListener, MouseListener
 		else if(ranking!=null&&ranking.isActive())
 		{
 			ranking.setVisible(false);
+		}
+		else if(this.tablero.nombreJugador.isActive())
+		{
+			this.tablero.nombreJugador.setVisible(false);
+			tablero.setVisible(false);
 		}
 		else
 		{
@@ -74,6 +86,7 @@ public class Controlador implements WindowListener, MouseListener
 				tablero = new Tablero();
 				dinerito = 5;
 				tiradas = 0;
+				avance = false;
 				this.tablero.addWindowListener(this);
 				this.tablero.addMouseListener(this);
 			}
@@ -101,6 +114,7 @@ public class Controlador implements WindowListener, MouseListener
 			{
 				dinerito--;
 				tiradas++;
+				avance = true;
 				numero1 = modelo.aleatorio();
 				numero2 = modelo.aleatorio();
 				numero3 = modelo.aleatorio();
@@ -133,19 +147,9 @@ public class Controlador implements WindowListener, MouseListener
 				{
 					dinerito++;
 				}
-				if(dinerito == 0)
-				{
-					System.out.println("Se acabó");
-					System.out.println("Has realizado " + tiradas + " tiradas");
-					this.tablero.removeMouseListener(this);
-				}
-				else
-				{
-					System.out.println("Tienes "+ dinerito + "€");
-				}
 			}
 			// Botón Avance Primero
-			else if(x>20&&x<90&&y>140&&y<160)
+			else if(x>20&&x<90&&y>140&&y<160&&avance)
 			{
 				numero1++;
 				dinerito--;
@@ -154,6 +158,44 @@ public class Controlador implements WindowListener, MouseListener
 					numero1 = 1;
 				}
 				tablero.establecerPrimera(numero1);
+				avance = false;
+			}
+			// Botón Avance Segundo
+			else if(x>100&&x<170&&y>140&&y<160&&avance)
+			{
+				numero2++;
+				dinerito--;
+				if(numero2>14)
+				{
+					numero2 = 1;
+				}
+				tablero.establecerSegunda(numero2);
+				avance = false;
+			}
+			// Botón Avance Tercero
+			else if(x>180&&x<250&&y>140&&y<160&&avance)
+			{
+				numero3++;
+				dinerito--;
+				if(numero3>14)
+				{
+					numero3 = 1;
+				}
+				tablero.establecerTercera(numero3);
+				avance = false;
+			}
+			if(dinerito == 0)
+			{
+				System.out.println("Se acabó");
+				System.out.println("Has realizado " + tiradas + " tiradas");
+				this.tablero.removeMouseListener(this);
+				this.tablero.nombreJugador.addWindowListener(this);
+				this.tablero.btnAceptar.addActionListener(this);
+				this.tablero.nombreJugador.setVisible(true);
+			}
+			else
+			{
+				System.out.println("Tienes "+ dinerito + "€");
 			}
 		}
 	}
@@ -166,4 +208,16 @@ public class Controlador implements WindowListener, MouseListener
 	public void mouseEntered(MouseEvent e){}
 	@Override
 	public void mouseExited(MouseEvent e){}
+
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		// Guardar el nombre en la base de datos
+		String nombre = this.tablero.txtNombre.getText();
+		Connection c = modelo.conectar();
+		modelo.insertar(c, nombre, tiradas);
+		// Cerrar el diálogo
+		this.tablero.nombreJugador.setVisible(false);
+		tablero.setVisible(false);
+	}
 }

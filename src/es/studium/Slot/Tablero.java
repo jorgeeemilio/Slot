@@ -1,9 +1,14 @@
 package es.studium.Slot;
 
+import java.awt.Button;
 import java.awt.Color;
+import java.awt.Dialog;
+import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Label;
+import java.awt.TextField;
 import java.awt.Toolkit;
 
 public class Tablero extends Frame
@@ -14,6 +19,11 @@ public class Tablero extends Frame
 	siete, ocho, nueve, diez, once, doce, trece, catorce;
 	Image primera, segunda, tercera;
 	Toolkit herramienta;
+	
+	Dialog nombreJugador = new Dialog(this, "Nombre Jugador", true);
+	Label lblNombre = new Label("Dame tu nombre, perdedor...");
+	TextField txtNombre = new TextField(10);
+	Button btnAceptar = new Button("Guardar");
 
 	Tablero()
 	{
@@ -37,6 +47,12 @@ public class Tablero extends Frame
 		doce = herramienta.getImage("imagenes/doce.png");
 		trece = herramienta.getImage("imagenes/trece.png");
 		catorce = herramienta.getImage("imagenes/catorce.png");
+		
+		nombreJugador.setSize(190, 140);
+		nombreJugador.setLayout(new FlowLayout());
+		nombreJugador.add(lblNombre);
+		nombreJugador.add(txtNombre);
+		nombreJugador.add(btnAceptar);
 
 		setVisible(true);
 	}
